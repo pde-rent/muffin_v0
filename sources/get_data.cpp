@@ -75,7 +75,7 @@ namespace tick
 		size_t			i = 0;
 		size_t			j = 0;
 		size_t			nb_ticks = csv_rows(file_name);
-		int				chunk = 3;
+		uint16_t		chunk = 3;
 		int				l = -1;
 		//fopen modes : r/rb/w/wb/a/ab/r+/w+/a+...
 		if (((histo = fopen(file_name, "rb")) != NULL))
