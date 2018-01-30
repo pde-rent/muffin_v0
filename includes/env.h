@@ -60,7 +60,7 @@ typedef struct s_open_order
 	float		lot_size;		//usually between 0.01 and 500 (volume = order.lot_size*ticker.lot_size)
 	float		tp_price;		//adjusted take profit [on calculate]
 	float		sl_price;		//adjusted stop loss [on calculate]
-	float		profit;	//current order profit if running [on calculate]
+	float		profit;			//current order profit if running [on calculate]
 	float		order_max_dd;	//max trade/account dd reached since entry [on calculate]
 	float		order_max_runup;//max trade/account run-up reached since entry [on calculate]
 	size_t		epoch_create;	//epoch time of ticket creation [on calculate]
@@ -71,9 +71,9 @@ typedef struct s_open_order
 }				t_open_order;
 typedef struct s_closed_order
 {
-	int16_t		type;		//1 = long, -1 = short, 2 = buy limit, -2 = sell limit, 3 = buy stop, -3 = sell stop
+	int16_t		type;			//1 = long, -1 = short, 2 = buy limit, -2 = sell limit, 3 = buy stop, -3 = sell stop
 	float		lot_size;		//usually between 0.01 and 500 (volume = order.lot_size*ticker.lot_size)
-	float		profit;	//profit achieved on the closed trade
+	float		profit;			//profit achieved on the closed trade
 	float		order_max_dd;	//max DD reached by the trade
 	float		order_max_runup;//max run-up reached by the trade
 	size_t		epoch_create;	//epoch time of ticket creation

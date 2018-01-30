@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "../includes/stdafx.h"
 
 static	long	csv_rows(string file_name)
 {
@@ -13,7 +13,7 @@ static	long	csv_rows(string file_name)
 		fseek(histo, 0, SEEK_END);
 		len = (ftell(histo));
 		fseek(histo, 0, SEEK_SET);
-		while (handle = fread(buf, 1, BUFF_SIZE, histo))
+		while ((handle = fread(buf, 1, BUFF_SIZE, histo)))
 		{
 			char* ptr = buf;
 			while ((ptr = (string)memchr(ptr, '\n', (buf + handle) - ptr)))
@@ -22,7 +22,7 @@ static	long	csv_rows(string file_name)
 				++neol;
 			}
 		}
-		printf("Characters to parse: %zu\nRows of data: %d\nEstimate loading time: %d ms\n",
+		printf("Characters to parse: %lu\nRows of data: %zu\nEstimate loading time: %zu ms\n",
 				len, neol, neol/290);
 		fclose(histo);
 		return (neol);
@@ -84,7 +84,7 @@ namespace tick
 			tmp = (string)malloc(sizeof(char) * 50);
 			//if ((fread(buf, 1, line_ln, histo) == line_ln))
 			//	fseek(histo, 0, SEEK_SET); //skip headers (byte size different from data lines)
-			while (fread(buf, 1, BUFF_SIZE, histo)) //1 = sizeof(char)
+			while ((fread(buf, 1, BUFF_SIZE, histo))) //1 = sizeof(char)
 			{
 				buf[BUFF_SIZE] = '\0';
 				i = 0;
@@ -134,8 +134,8 @@ namespace tick
 							chunk = 3;
 							i++;
 							j++; //the whole tick data is now readable
-							trigger::tick(env);
-							trigger::circular(env->data);
+							trigger::tick_event::next(env);
+							trigger::tick_event::circulate(env->data);
 						}
 					}
 

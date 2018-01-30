@@ -1,5 +1,6 @@
-#include "stdafx.h"
+#include "../includes/stdafx.h"
 
+/*
 int		get_config(string file_name, t_env *env)
 {
 	FILE		*config_file;
@@ -16,3 +17,4 @@ int		get_config(string file_name, t_env *env)
 	}
 	return (0);
 }
+*/

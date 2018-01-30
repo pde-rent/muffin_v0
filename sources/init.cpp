@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "../includes/stdafx.h"
 
 namespace init
 {
@@ -10,20 +10,6 @@ namespace init
 		data->px = new std::deque<float>(0);
 		data->vol = new std::deque<float>(0);
 		return (data);
-	}
-	t_order_book	*order_book(void)
-	{
-		t_order_book	*order_book;
-		order_book = (t_order_book *)malloc(sizeof(t_order_book));
-		order_book->order = new std::deque<t_open_order>(0);
-		return (order_book);
-	}
-	t_order_history	*order_history(void)
-	{
-		t_order_history	*order_history;
-		order_history = (t_order_history *)malloc(sizeof(t_order_history));
-		order_history->order = new std::deque<t_closed_order>(0);
-		return (order_history);
 	}
 	t_ohlc_data		*ohlc_data(void)
 	{
@@ -64,15 +50,13 @@ namespace init
 		t_ticker			*ticker;
 		t_account			*acc;
 		t_tick_data			*data;
-		t_order_book		*order_book;
-		t_order_history		*order_history;
 
 		env->rsk =				init::risk();
 		env->acc =				init::account();
 		env->data =				init::tick_data();
 		env->ticker =			init::ticker();
-		env->order_book =		init::order_book();
-		env->order_history =	init::order_history();
+		env->order_book =		new std::deque<t_open_order>(0);
+		env->order_history =	new std::deque<t_closed_order>(0);
 		//param_parse("...");
 		//t_tick_data *data = static_cast<t_tick_data*>(histo); //shall result depend on parameters parsing
 		return (env);
