@@ -34,17 +34,20 @@ namespace init
 	t_account	*account(void)
 	{
 		t_account	*acc;
-
+		//PARSE THAT PARAMS BRO
 		acc = (t_account *)malloc(sizeof(t_account));
-		acc->holder = _strdup("Paul de Renty");
+		acc->holder = "Paul de Renty";
 		acc->starting_eq = 1000.00;
-		acc->number = _strdup("00000001");
+		acc->balance = acc->starting_eq;
+		acc->number = "00000001";
 		return (acc);
 	}
 	t_ticker	*ticker(void)
 	{
 		t_ticker	*ticker;
 		ticker = (t_ticker *)malloc(sizeof(t_ticker));
+		ticker->nb_long = 0;
+		ticker->nb_short = 0;
 		return (ticker);
 	}
 	t_risk		*risk(void)
@@ -72,6 +75,6 @@ namespace init
 		env->order_history =	init::order_history();
 		//param_parse("...");
 		//t_tick_data *data = static_cast<t_tick_data*>(histo); //shall result depend on parameters parsing
-
-	}				t_env;
+		return (env);
+	}
 }

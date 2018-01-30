@@ -28,15 +28,14 @@ namespace fast
 			double f = 0.0;
 			int n = 0;
 			++str;
-			while (*str >= '0' && *str <= '9') {
+			while (*str >= '0' && *str <= '9')
+			{
 				f = (f*10.0) + (*str - '0');
 				++str;
 				++n;
 			}
 			res += f / pow(10.0, n);
 		}
-		if (neg)
-			res = -res;
-		return res;
+		return (neg ? -res : res);
 	}
 }

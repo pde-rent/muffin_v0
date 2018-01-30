@@ -21,6 +21,9 @@ See help.txt for description of settings
 >> ticker_quote_iso:   [USD]
 >> ticker_price_mode:  [ohlc]
 >> ticker_leverage:    [50]
+>> ticker_lot_size:    [100000]
+>> ticker_min_lot:     [0.01]
+>> ticker_max_lot:     [100]
 >> ticker_spread_mode: [fixed]
 >> ticker_spread:      [10]
 
