@@ -1,36 +1,5 @@
 #include "../includes/stdafx.h"
 
-static	long	csv_rows(string file_name)
-{
-	FILE			*histo;
-	char			buf[BUFF_SIZE];
-	size_t			neol = 0;
-	int				handle;
-	unsigned long	len = 0;
-	//fopen modes : r/rb/w/wb/a/ab/r+/w+/a+...
-	if (((histo = fopen(file_name, "r")) != NULL))
-	{
-		fseek(histo, 0, SEEK_END);
-		len = (ftell(histo));
-		fseek(histo, 0, SEEK_SET);
-		while ((handle = fread(buf, 1, BUFF_SIZE, histo)))
-		{
-			char* ptr = buf;
-			while ((ptr = (string)memchr(ptr, '\n', (buf + handle) - ptr)))
-			{
-				++ptr;
-				++neol;
-			}
-		}
-		printf("Characters to parse: %lu\nRows of data: %zu\nEstimate loading time: %zu ms\n",
-				len, neol, neol/290);
-		fclose(histo);
-		return (neol);
-	}
-	printf("Failed to open the data file\n");
-	return (0);
-}
-
 namespace tick
 {
 	static	FILE		*histo;
@@ -74,14 +43,14 @@ namespace tick
 		char			buf[BUFF_SIZE + 1];
 		size_t			i = 0;
 		size_t			j = 0;
-		size_t			nb_ticks = csv_rows(file_name);
+		size_t			nb_ticks = file::count_lines(file_name);
 		uint16_t		chunk = 3;
 		int				l = -1;
 		//fopen modes : r/rb/w/wb/a/ab/r+/w+/a+...
 		if (((histo = fopen(file_name, "rb")) != NULL))
 		{
 			env->ticker->size = nb_ticks;
-			tmp = (string)malloc(sizeof(char) * 50);
+			tmp = (string)malloc(sizeof(char) * 100);
 			//if ((fread(buf, 1, line_ln, histo) == line_ln))
 			//	fseek(histo, 0, SEEK_SET); //skip headers (byte size different from data lines)
 			while ((fread(buf, 1, BUFF_SIZE, histo))) //1 = sizeof(char)
@@ -133,16 +102,17 @@ namespace tick
 							l = -1;
 							chunk = 3;
 							i++;
-							j++; //the whole tick data is now readable
-							trigger::tick_event::next(env);
-							trigger::tick_event::circulate(env->data);
+							j++;
+							//the whole tick data is now readable
+							//trigger::tick_event::next(env);
+							//trigger::tick_event::circulate(env->data);
 						}
 					}
 
 				}
 			}
 			fclose(histo);
-			free(tmp);
+			//free(tmp);
 			printf("Loaded %zu input rows from the data set\n", env->data->epoch->size());
 			return (1);
 		}

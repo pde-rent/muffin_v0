@@ -2,7 +2,7 @@
 
 namespace init
 {
-	t_tick_data		*tick_data(void)
+	static t_tick_data		*tick_data(void)
 	{
 		t_tick_data	*data;
 		data = (t_tick_data *)malloc(sizeof(t_tick_data));
@@ -11,13 +11,13 @@ namespace init
 		data->vol = new std::deque<float>(0);
 		return (data);
 	}
-	t_ohlc_data		*ohlc_data(void)
+	static t_ohlc_data		*ohlc_data(void)
 	{
 		t_ohlc_data	*data;
 		data = (t_ohlc_data *)malloc(sizeof(t_ohlc_data));
 		return (data);
 	}
-	t_account	*account(void)
+	static t_account	*account(void)
 	{
 		t_account	*acc;
 		//PARSE THAT PARAMS BRO
@@ -28,7 +28,7 @@ namespace init
 		acc->number = "00000001";
 		return (acc);
 	}
-	t_ticker	*ticker(void)
+	static t_ticker	*ticker(void)
 	{
 		t_ticker	*ticker;
 		ticker = (t_ticker *)malloc(sizeof(t_ticker));
@@ -36,7 +36,7 @@ namespace init
 		ticker->nb_short = 0;
 		return (ticker);
 	}
-	t_risk		*risk(void)
+	static t_risk		*risk(void)
 	{
 		t_risk	*rsk;
 		rsk = (t_risk *)malloc(sizeof(t_risk));

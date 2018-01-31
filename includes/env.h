@@ -1,7 +1,7 @@
 #pragma once
 
 # define BUFF_SIZE			(1024 * 16)
-# define TICK_BUFF_SIZE		50000
+# define TICK_BUFF_SIZE		100
 # define TICK(X)			env->data->px->at(X)
 # define VOL(X)				env->data->vol->at(X)
 # define EPOCH(X)			env->data->epoch->at(X)

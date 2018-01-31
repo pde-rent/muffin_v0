@@ -4,19 +4,27 @@
 
 namespace init
 {
-	t_tick_data	*tick_data();
-	t_ohlc_data	*ohlc_data();
-	t_account	*account();
-	t_ticker	*ticker();
-	//t_order		*order(); //open_order and history_order to differenciate
-	t_risk		*risk();
+	//t_tick_data	*tick_data();
+	//t_ohlc_data	*ohlc_data();
+	//t_account		*account();
+	//t_ticker		*ticker();
+	//t_risk		*risk();
 	t_env		*env();
+}
+namespace deinit
+{
+	int		env(t_env *env);
 }
 namespace tick
 {
 	int			load_all(string file_name, t_env *env); //on_tick is being called at each tick
 	//int		set(string file_name, t_tick_data *data);
 	//int		next(t_tick_data *data);
+}
+namespace file
+{
+	bool			exists(string file_name);
+	unsigned long	count_lines(string file_name);
 }
 namespace fast
 {
@@ -63,5 +71,10 @@ namespace calculate
 {
 	//P&L...
 }
+namespace compliance
+{
+	int		argv(int ac, char **av);
+}
+int		put_error(string str, int err_code);
 int		on_tick(t_env *env);
 int		get_config(string file_name, t_env *env);

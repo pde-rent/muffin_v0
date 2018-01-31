@@ -15,9 +15,10 @@
 
 //Project specific inclusions
 //# include "targetver.h"	//Windows specific header
-# include "env.h"		//environement header
-# include "indi.h"		//indicators header
-# include "muffin.h"	//all other functions
+# include "env.h"			//environement header
+# include "muffin.h"		//all other functions
+# include "indicators.h"	//indicators header
+# include "err_codes.h"	//indicators header
 
 //Malloc related defines
 # define IS_INT(x) if (!x) return (0);
