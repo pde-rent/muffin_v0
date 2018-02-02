@@ -1,4 +1,10 @@
-#include "../includes/stdafx.h"
+#pragma once
+
+#ifdef _WIN32
+# include "stdafx.h"
+#elif __APPLE__
+# include "../includes/stdafx.h"
+#endif
 
 /*
 int		get_config(string file_name, t_env *env)

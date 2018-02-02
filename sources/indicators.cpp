@@ -1,11 +1,17 @@
-#include "../includes/stdafx.h"
+#pragma once
 
-float SMA(t_env *env, int period, int shift)
+#ifdef _WIN32
+# include "stdafx.h"
+#elif __APPLE__
+# include "../includes/stdafx.h"
+#endif
+
+double SMA(t_env *env, int period, int shift)
 {
-    std::deque<float>::iterator it = env->data->px->begin(); //auto could be use for readability
-    float   sum = 0;
+	std::deque<float>::iterator front = env->data->px->begin(); //auto could be use for readability
+	double	sum = *front;
 
-    while (shift--) ++it;
-    while ((shift++ < period) && (sum += *it)) ++it;
-    return (sum/period);
+	while (shift){ ++front; --shift; }
+    while ((++shift < period) && (sum += *front)) ++front;
+    return (sum/(double)period);
 }

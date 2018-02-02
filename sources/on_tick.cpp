@@ -6,8 +6,8 @@
 # include "../includes/stdafx.h"
 #endif
 
-int	put_error(string str, int err_code)
+int		on_tick(t_env *env)
 {
-	printf("%s", str);
-	return (err_code);
+	SMA(env, 1000, 0);
+	return (1);
 }

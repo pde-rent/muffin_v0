@@ -1,7 +1,7 @@
 #pragma once
 
 # define BUFF_SIZE			(1024 * 16)
-# define TICK_BUFF_SIZE		100
+# define TICK_BUFF_SIZE		5000
 # define TICK(X)			env->data->px->at(X)
 # define VOL(X)				env->data->vol->at(X)
 # define EPOCH(X)			env->data->epoch->at(X)
@@ -29,8 +29,8 @@ typedef struct s_ohlc_data
 typedef struct s_account
 {
 	uint16_t		margin_call_pct;//margin call *100 if applicable [param parsing]
-	std::string		holder;			//account holder name [param parsing]
-	std::string		number;			//account number (string to contain atenant zeros) [param parsing]
+	string			holder;			//account holder name [param parsing]
+	string			number;			//account number (string to contain atenant zeros) [param parsing]
 	char			fiat_iso[4];	//account currency (3 chars + NULL terminated) [param parsing]
 	float			starting_eq;	//starting equity (usually account deposit) [param parsing]
 	float			floating_eq;	//floating account equity (floating p&l) [on calculate]
@@ -38,21 +38,21 @@ typedef struct s_account
 }				t_account;
 typedef struct s_ticker
 {
-	uint16_t	price_mode;		//1 = tick, 2 = OHLC [param parsing]
-	uint16_t	leverage;		//min 1, max 1000 [param parsing]
-	uint16_t	spread_mode;	//1 = fixed, 2 = proportionnal, 3 = custom entries (to implement) [param parsing]
-	uint16_t	spread;			//one side spread, fixed or % (not to be computed if spread is custom) [param parsing]
-	uint16_t	lot_com_pct;	//commission paid per lot to the broker (over spread) [param parsing]
-	size_t		lot_size;		//1 to 1M (i.e. BTCUSD = 1, EURUSD = 100000) [param parsing]
-	size_t		size;			//nb TICKS or OHLC in csv file (precomputational) [on calculate]
-//  size_t		current_row;	//current candle / tick being analysed [on calculate]
-	float		min_lot;		//usualy 0.1 or 0.01 (microlots) [param parsing]
-	float		max_lot;		//usualy under 500 [param parsing]
-	char		iso_base[4];	//ISO 4217 standard base currency (3 chars + NULL) [param parsing]
-	char		iso_quote[4];	//ISO 4217 standard quote currency (3 chars + NULL) [param parsing]
-	char		denom[7];		//ISO base + ISO quote + NULL [param parsing]
-	uint16_t	nb_long;		//true if at least 1 trade is long [on calculate]
-	uint16_t	nb_short;		//true if at least 1 trade is short [on calculate]
+	uint16_t	price_mode;			//1 = tick, 2 = OHLC [param parsing]
+	uint16_t	leverage;			//min 1, max 1000 [param parsing]
+	uint16_t	spread_mode;		//1 = fixed, 2 = proportionnal, 3 = custom entries (to implement) [param parsing]
+	uint16_t	spread;				//one side spread, fixed or % (not to be computed if spread is custom) [param parsing]
+	uint16_t	lot_com_pct;		//commission paid per lot to the broker (over spread) [param parsing]
+	size_t		lot_size;			//1 to 1M (i.e. BTCUSD = 1, EURUSD = 100000) [param parsing]
+	size_t		size;				//nb TICKS or OHLC in csv file (precomputational) [on calculate]
+//  size_t		current_row;		//current candle / tick being analysed [on calculate]
+	float		min_lot;			//usualy 0.1 or 0.01 (microlots) [param parsing]
+	float		max_lot;			//usualy under 500 [param parsing]
+	char		iso_base[4];		//ISO 4217 standard base currency (3 chars + NULL) [param parsing]
+	char		iso_quote[4];		//ISO 4217 standard quote currency (3 chars + NULL) [param parsing]
+	char		denom[7];			//ISO base + ISO quote + NULL [param parsing]
+	uint16_t	nb_long;			//true if at least 1 trade is long [on calculate]
+	uint16_t	nb_short;			//true if at least 1 trade is short [on calculate]
 }				t_ticker;
 typedef struct s_open_order
 {

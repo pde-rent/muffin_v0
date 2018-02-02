@@ -1,10 +1,14 @@
-// muffin.cpp : Defines the entry point for the console application.
+#pragma once
 
-#include "../includes/stdafx.h"
+#ifdef _WIN32
+# include "stdafx.h"
+#elif __APPLE__
+# include "../includes/stdafx.h"
+#endif
 
 int main(int ac, char **av)
 {
-	if (!compliance::argv(ac, av))
+	if (((!compliance::argv(ac, av))))
 		return (0);
 	t_env	*env;
 	env = init::env();
@@ -13,7 +17,7 @@ int main(int ac, char **av)
 	string config_file = av[2];
 	//start clockwatch
 	auto t1 = std::chrono::high_resolution_clock::now();
-	printf("ok\n");
+	printf("Ticker initialized\n");
 	tick::load_all(data_file, env);
 	//tick::set(file_name, data);
 	//while (tick::next(data));

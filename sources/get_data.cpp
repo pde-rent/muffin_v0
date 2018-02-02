@@ -1,4 +1,10 @@
-#include "../includes/stdafx.h"
+#pragma once
+
+#ifdef _WIN32
+# include "stdafx.h"
+#elif __APPLE__
+# include "../includes/stdafx.h"
+#endif
 
 namespace tick
 {
@@ -43,7 +49,9 @@ namespace tick
 		char			buf[BUFF_SIZE + 1];
 		size_t			i = 0;
 		size_t			j = 0;
+		bool			buffer_filled = false;
 		size_t			nb_ticks = file::count_lines(file_name);
+		//size_t			max_ticks = (TICK_BUFF_SIZE > nb_ticks ? nb_ticks : TICK_BUFF_SIZE);
 		uint16_t		chunk = 3;
 		int				l = -1;
 		//fopen modes : r/rb/w/wb/a/ab/r+/w+/a+...
@@ -57,7 +65,7 @@ namespace tick
 			{
 				buf[BUFF_SIZE] = '\0';
 				i = 0;
-				while (buf[i] && (j < nb_ticks) && (j < TICK_BUFF_SIZE)) // is ascii >> not null nor lost
+				while (buf[i] && (j < nb_ticks)) // is ascii >> not null nor lost
 				{
 					if (chunk == 3)
 					{
@@ -103,12 +111,15 @@ namespace tick
 							chunk = 3;
 							i++;
 							j++;
-							//the whole tick data is now readable
-							//trigger::tick_event::next(env);
-							//trigger::tick_event::circulate(env->data);
+							if (buffer_filled)
+							{
+								//the whole tick data is now readable
+								trigger::tick_event::next(env);
+								trigger::tick_event::circulate(env->data);
+							}
 						}
 					}
-
+					if (j == TICK_BUFF_SIZE) buffer_filled = true;
 				}
 			}
 			fclose(histo);

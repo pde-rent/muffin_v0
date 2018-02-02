@@ -5,7 +5,7 @@
 # include <cstdint>		//advanced int typedefs
 # include <climits>     //advanced type limits defines
 # include <string>
-//# include <tchar.h>     //ANSI, DBCS, or Unicode strings
+//# include <tchar.h>   //ANSI, DBCS, or Unicode strings
 # include <cstdio>		//C inherited i/o library
 # include <cstdlib>		//C inherited multi-usage stdlib
 # include <cstring>		//C inherited string operations
@@ -14,10 +14,10 @@
 # include <chrono>
 
 //Project specific inclusions
-//# include "targetver.h"	//Windows specific header
-# include "env.h"			//environement header
-# include "muffin.h"		//all other functions
-# include "indicators.h"	//indicators header
+# include "targetver.h"	//Windows specific header
+# include "env.h"		//environement header
+# include "muffin.h"	//all other functions
+# include "indicators.h"//indicators header
 # include "err_codes.h"	//indicators header
 
 //Malloc related defines

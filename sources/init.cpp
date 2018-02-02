@@ -1,4 +1,10 @@
-#include "../includes/stdafx.h"
+#pragma once
+
+#ifdef _WIN32
+# include "stdafx.h"
+#elif __APPLE__
+# include "../includes/stdafx.h"
+#endif
 
 namespace init
 {
@@ -22,10 +28,10 @@ namespace init
 		t_account	*acc;
 		//PARSE THAT PARAMS BRO
 		acc = (t_account *)malloc(sizeof(t_account));
-		acc->holder = "Paul de Renty";
+		acc->holder = "Paul de Renty\0";
 		acc->starting_eq = 1000.00;
 		acc->balance = acc->starting_eq;
-		acc->number = "00000001";
+		acc->number = "00000001\0";
 		return (acc);
 	}
 	static t_ticker	*ticker(void)
