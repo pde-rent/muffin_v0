@@ -1,0 +1,48 @@
+        .-------------------.
+        |    CONFIG FILE    |
+        '-------------------'
+
+Thanks to use brackets as in backup file
+Order is restricted, see the backup file
+A blank is interpreted as default setting
+See help.txt for description of settings
+
+<<< ACCOUNT >>>
+
+>> account_holder:     [Paul de Renty]
+>> account_number:     [00000001]
+>> deposit_fiat_iso:   [EUR]
+>> deposit_amount:     [1000.00]
+
+<<< INSTRUMENT >>>
+
+>> ticker_type:        [forex]              forex | index | commo | btc | eth | stock
+>> ticker_base_iso:    [EUR]                3 letters ISO 4217 standard
+>> ticker_quote_iso:   [USD]                3 letters ISO 4217 standard
+>> ticker_price_mode:  [tick]               tick | ohlc
+>> ticker_leverage:    [200]                from 1 : 1 to 1000 : 1
+>> ticker_lot_size:    [100000]             from 0.1 to 1000000
+>> ticker_min_lot:     [0.01]               from 0.0001 to 100
+>> ticker_max_lot:     [100]                from 1 to 100000
+>> ticker_spread_mode: [fixed]              fixed_pts | fixed_pct | internal | external (to dataset)
+>> ticker_spread_file: [none]               spread model file to include in assets folder
+>> ticker_spread:      [0]                  absolute points if fixed_pts, % if fixed_pct, useless if external
+
+<<< RISK >>>
+
+>> max_long_trades:    [5]
+>> max_short_trades:   [5]
+>> max_trades:         [10]
+>> max_dd_pct_acc:     [5]
+>> max_dd_pct_ticker:  [5]
+>> max_dd_fiat:        [100]
+>> max_dd_ticker:      [500]
+>> target_pct_acc:     [5]
+>> target_pct_ticker:  [5]
+>> target_fiat:        [100]
+
+<<< PATHS >>>
+
+>> path_to_assets:     [D:\backup_paul_pc\vs_projects\muffin\muffin\assets\]
+>> data_file_name:     [EURUSD.csv]
+>> config_file_name:   [config.txt]
