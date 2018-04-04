@@ -23,11 +23,11 @@ typedef struct s_tick_data
 typedef struct s_ohlc_data
 {
 	std::deque<size_t>	*epoch;		//epoch timestamp queue
-	std::deque<float>	*open;		//epoch open queue
-	std::deque<float>	*high;		//epoch high queue
-	std::deque<float>	*low;		//epoch low queue
-	std::deque<float>	*close;		//epoch close queue
-	std::deque<float>	*vol;		//epoch volume queue
+	std::deque<float>	*open;		//open queue
+	std::deque<float>	*high;		//high queue
+	std::deque<float>	*low;		//low queue
+	std::deque<float>	*close;		//close queue
+	std::deque<float>	*vol;		//volume queue
 }				t_ohlc_data;
 typedef struct s_account
 {
