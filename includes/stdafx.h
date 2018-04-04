@@ -22,7 +22,7 @@
 # include "orders.h"	//orders header
 # include "err_codes.h"	//errors header
 # include "env.h"		//environement header
-# include "muffin.h"	//all other functions
+# include "muffin.h"	//core functions
 # include "indicators.h"//indicators header
 
 //Malloc related defines
