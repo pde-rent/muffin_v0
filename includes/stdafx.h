@@ -3,7 +3,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 //external inclusions
 # include <cstdint>		//advanced int typedefs
-# include <climits>     //advanced type limits defines
+# include <climits>     //advanced type limits definitions
 # include <string>
 //# include <tchar.h>   //ANSI, DBCS, or Unicode strings
 # include <cstdio>		//C inherited i/o library
@@ -12,15 +12,15 @@
 # include <string>
 # include <ctime>
 # include <cmath>		//C inherited maths library
-# include <deque>		//C++ vectorization lib
+# include <deque>		//C++ queuing/dequeuing lib
 # include <chrono>		//C++ chrono
-# include <omp.h>		//C multiprocessing preprocessor utility
+# include <omp.h>		//C multiprocessing/threading preprocessor utility
 
 //Project specific inclusions
 # include "targetver.h"	//Windows specific header
 # include "parameters.h"//parameters header
 # include "orders.h"	//orders header
-# include "err_codes.h"	//indicators header
+# include "err_codes.h"	//errors header
 # include "env.h"		//environement header
 # include "muffin.h"	//all other functions
 # include "indicators.h"//indicators header
