@@ -1,0 +1,47 @@
+#         .-------------------.
+#         |    CONFIG FILE    |
+#         '-------------------'
+
+# Thanks to use brackets as in backup file
+# This config file is parsed with a custom built-in parser
+# Not an official yaml parser
+# Order is restricted, see the backup file
+# A blank is interpreted as default setting
+# See help.txt for description of settings
+
+# <<< ACCOUNT >>>
+account_holder:          [Paul de Renty]
+account_number:          [00000001]
+deposit_fiat_iso:        [EUR]
+deposit_amount:          [1000.00]
+
+# <<< INSTRUMENT >>>
+ticker_type:             [forex]           #forex | index | commo | btc | eth | stock
+ticker_base_iso:         [EUR]             #3 letters ISO 4217 standard
+ticker_quote_iso:        [USD]             #3 letters ISO 4217 standard
+ticker_price_mode:       [tick]            #tick | ohlc
+ticker_leverage:         [200]             #from 1 : 1 to 1000 : 1
+ticker_lot_size:         [100000]          #from 0.1 to 1000000
+ticker_min_lot:          [0.01]            #from 0.0001 to 100
+ticker_max_lot:          [100]             #from 1 to 100000
+ticker_spread_mode:      [fixed]           #fixed_pts | fixed_pct | internal | external (to dataset)
+ticker_spread_file:      [none]            #spread model file to include in assets folder
+ticker_spread:           [0]               #absolute points if fixed_pts, % if fixed_pct, useless if external
+
+# <<< RISK >>>
+max_long_trades:         [5]               #max simultaneous long trades allowed
+max_short_trades:        [5]               #max simultaneous short trades allowed
+max_trades:              [10]              #max simultaneous all trades allowed
+max_dd_pct_acc:          [10.0]            #max drawdown allowed in % of account equity
+max_dd_pct_ticker:       [10.0]            #max drawdown allowed in % of traded ticker
+max_dd_acc:              [500.00]          #max absolute account base currency equity drawdown allowed
+max_dd_ticker:           [null]            #max base currency absolute drawdown allowed on the ticker
+max_runup_pct_acc:       [null]            #max runup...
+max_runup_pct_ticker:    [null]            #max runup...
+max_runup_acc:           [null]            #max runup...
+max_runup_ticker:        [null]            #max runup...
+
+# <<< PATHS >>>
+path_to_assets:          [/home/pde-rent/Documents/muffin_framework] #where data files are stored
+data_file_name:          [EURUSD.csv]                                #data file csv name
+config_file_name:        [config.yml]                                #config file name

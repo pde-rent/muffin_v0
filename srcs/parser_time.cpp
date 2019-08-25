@@ -1,10 +1,4 @@
-#pragma once
-
-#ifdef _WIN32
-# include "stdafx.h"
-#elif __APPLE__
-# include "../includes/stdafx.h"
-#endif
+#include "main.hpp"
 
 #ifdef _MSC_VER
 const char * strp_weekdays[] =
@@ -258,23 +252,12 @@ static char *strptime(const char *s, const char *format, struct tm *tm)
 }
 #endif // _MSC_VER
 
-namespace transform
+namespace parser::time
 {
-	namespace time
+	std::string to_string(time_t epoch, const char* format)
 	{
-		std::string get_timestamp(time_t epochTime, const char* format)
-		{
-			char timestamp[22] = { 0 };
-			strftime(timestamp, sizeof(timestamp), format, localtime(&epochTime));
-			return timestamp;
-		}
-
-		time_t get_epoch(const char* theTime, const char* format)
-		{
-			std::tm tmTime;
-			memset(&tmTime, 0, sizeof(tmTime));
-			strptime(theTime, format, &tmTime);
-			return mktime(&tmTime);
-		}
+		char timestamp[22] = { 0 };
+		strftime(timestamp, sizeof(timestamp), format, localtime(&epoch));
+		return timestamp;
 	}
 }
