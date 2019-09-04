@@ -19,7 +19,7 @@ deposit_amount:          [1000.00]
 ticker_type:             [forex]           #forex | index | commo | btc | eth | stock
 ticker_base_iso:         [EUR]             #3 letters ISO 4217 standard
 ticker_quote_iso:        [USD]             #3 letters ISO 4217 standard
-ticker_price_mode:       [tick]            #tick | ohlc
+ticker_price_mode:       [ohlc]            #tick | ohlc
 ticker_leverage:         [200]             #from 1 : 1 to 1000 : 1
 ticker_lot_size:         [100000]          #from 0.1 to 1000000
 ticker_min_lot:          [0.01]            #from 0.0001 to 100
@@ -42,6 +42,6 @@ max_runup_acc:           [null]            #max runup...
 max_runup_ticker:        [null]            #max runup...
 
 # <<< PATHS >>>
-path_to_assets:          [/home/pde-rent/Documents/muffin_framework] #where data files are stored
-data_file_name:          [EURUSD.csv]                                #data file csv name
-config_file_name:        [config.yml]                                #config file name
+data_absolute_path:      [/home/pde-rent/Documents/muffin_framework/resources/data]  #where data files are stored
+data_folder:             [EURUSD_20190101-20190201.csv]                              #data file csv name
+config_file_path:        [config.yml]                                                #config file name

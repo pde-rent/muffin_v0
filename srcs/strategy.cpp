@@ -1,52 +1,50 @@
 #include "main.hpp"
 
-namespace strategy
+// this function is the core backtested strategy
+// this will be called on ever data point (be it raw trade, tick, or ohlc)
+int strategy::run(t_env *env, int pass)
 {
-	int		run(t_env *env/*, bool *lock[3]*/)
-	{
-		//get new tick >> from the lock lock[2]
-		//static double old_MA1 = TICK(0);
-		static double MA1[MAX_PASS];
-		static double PMA1[MAX_PASS] = {0};	//prev MA
-		static double PPMA1[MAX_PASS] = {0};	//prev prev MA
-		//optimisation loop
-		#pragma omp parallel //num_threads(5)
-		{
-			#pragma omp for
-			for (int pass = 0; pass < env->pass; ++pass)
-			{
-				//indicators
-				MA1[pass] = on_deque::SMA<double>(env->price, MIN_MA1 + (env->step[0] * pass), 0, pass);
-				//double MA2 = on_deque::SMA2<double>(env->price, 1000, 0);
-				//entry && exit conditions
-				//printf("ASK: %f MA: %f\n", ASK(0), MA1[pass]);
-				if (!NB_LONG(pass) && MA1[pass] < PMA1[pass] && PMA1[pass] < PPMA1[pass])
-				{
-					order::open(env, MODE_BUY, 1.00, MODE_TP_NONE, MODE_SL_NONE, 0, 0, 1, pass, "");
-					if (NB_SHORT(pass) > 0)
-						order::close(env,
-							/*MODE_FIFO,
-							MODE_CLOSE_SINGLE,*/
-							2,
-							pass,
-							"");
-				}
-				if (!NB_SHORT(pass) && MA1[pass] > PMA1[pass] && PMA1[pass] > PPMA1[pass])
-				{
-					order::open(env, MODE_SELL, 1.00, MODE_TP_NONE, MODE_SL_NONE, 0, 0, 2, pass, "");
-					if (NB_LONG(pass) > 0)
-						order::close(env,
-							/*MODE_FIFO,
-							MODE_CLOSE_SINGLE,*/
-							1,
-							pass,
-							"");
-				}
-				PPMA1[pass] = PMA1[pass];
-				PMA1[pass] = MA1[pass];
-				//printf("epoch: %zu balance: %f\n", EPOCH(0), env->acc->balance);
-			}
+	// declare indicators which will be used
+	// static double old_MA1 = TICK(0);
+	printf("PASS: %d consuming\n", pass);
+	static double MA1[MAX_PASS] = {0};
+	static double PMA1[MAX_PASS] = {0};		//prev MA
+	static double PPMA1[MAX_PASS] = {0};	//prev prev MA
+	// indicators time series update
+	MA1[pass] = indicators::SMA<double>(env->price, MIN_MA1 + (env->step[0] * pass), 0, pass);
+	// double MA2 = on_deque::SMA2<double>(env->price, 1000, 0);
+
+	// entry && exit conditions
+	if (MA1[pass] < PMA1[pass] && PMA1[pass] < PPMA1[pass]) {
+		if (NB_SHORT[pass] > 0) {
+			order::close_all(env, MODE_SELL, pass, "[strategy short close]");
 		}
-		return (1);
+		if (NB_LONG[pass] == 0) {
+			order::open(env,
+				MODE_BUY, 1.00,					// entry mode / size
+				MODE_TP_NONE, MODE_SL_NONE,		// tp mode / sl_mode
+				0, 0,							// tp values / sl value
+				0, pass,						// ticket / magic
+				""								// comment
+			);			
+		}
 	}
+	if (MA1[pass] > PMA1[pass] && PMA1[pass] > PPMA1[pass]) {
+		if (NB_LONG[pass] > 0) {
+			order::close_all(env, MODE_BUY, pass, "[strategy long close]");
+		}
+		if (NB_SHORT[pass] == 0) {
+			order::open(env,
+				MODE_SELL, 1.00,
+				MODE_TP_NONE, MODE_SL_NONE,
+				0, 0,
+				0, pass,
+				""
+			);
+		}
+	}
+	// set MA[1] to PMA and MA[2] to PPMA:
+	PPMA1[pass] = PMA1[pass];
+	PMA1[pass] = MA1[pass];
+	return (1);
 }

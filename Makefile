@@ -4,12 +4,12 @@
 NAME    	= muffin
 SRC_PATH	= srcs/
 OBJ_PATH	= objs/
-FLAGS 		= -std=c++17# version
-FLAGS		+= -Wall -Werror -Wextra# -Wshadow -Wnon-virtual-dtor #error flags
-#FLAGS		+= -pedantic -ainsi #normative flags
+FLAGS 		= -std=c++1z# version
+FLAGS		+= -Wall -Werror -Wextra -fsanitize=address# #-Wshadow -Wnon-virtual-dtor #error flags
+FLAGS		+= -pedantic #normative flags
 FLAGS		+= -g# debugging
-FLAGS		+= -fopenmp # OPENMP multithreading preprocessors flag
-#FLAGS		+= -O0 #optimisation flag (up to -O2, max unrolling and inlining)
+FLAGS		+= -lpthread -pthread#-fopenmp # OPENMP multithreading preprocessors flag
+# FLAGS		+= -O2 #optimisation flag (up to -O2, max unrolling and inlining)
 CC			= g++ $(FLAGS)
 NAME_P		= $(shell echo $(NAME) | tr ' ' '\n' | sed "s/\.[acoh]$///g" | tr '\n' ' ' | sed "s/ $///g")
 SRC_SUFFIX	= .cpp
@@ -17,11 +17,11 @@ COMMON =	main \
 			error \
 			parser_str \
 			parser_time \
+			files \
+			print \
 			init \
 			compliance \
-			files \
-			get_config \
-			indicators \
+			config \
 			orders \
 			strategy \
 			tick_consumer \

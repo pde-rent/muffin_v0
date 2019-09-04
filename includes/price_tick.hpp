@@ -1,9 +1,6 @@
 #pragma once
 
 #include "t_env.hpp"
-#include "t_data.hpp"
-
-#define MODE_TICk 1
 
 namespace stream::tick::consumer
 {

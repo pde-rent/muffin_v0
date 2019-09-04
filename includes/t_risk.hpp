@@ -2,9 +2,9 @@
 
 typedef struct s_risk
 {
-	uint16_t	max_trades;				//max overall trades running [param parsing]
-	uint16_t	max_short;				//max short tardes running [param parsing]
-	uint16_t	max_long;				//max long trades running [param parsing]
+	int	max_trades;				//max overall trades running [param parsing]
+	int	max_short;				//max short tardes running [param parsing]
+	int	max_long;				//max long trades running [param parsing]
 	double		max_dd_pct_acc;			//max relative trade/acc balance DD in % [param parsing]
 	double		max_dd_pct_ticker;		//max relative ticker DD in % since entry [param parsing]
 	double		max_dd_acc;				//max trade/acc balance DD in fiat [param parsing]

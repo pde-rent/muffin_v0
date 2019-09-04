@@ -1,7 +1,6 @@
 #pragma once
 
 #include "t_env.hpp"
-#include "t_data.hpp"
 
 namespace stream::ohlc::consumer
 {

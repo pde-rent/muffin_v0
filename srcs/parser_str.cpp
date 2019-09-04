@@ -23,8 +23,17 @@ namespace parser::str
 	}
 	int		to_int(const char *str)
 	{
-		int	res = 0;
-		char *s = (char *)str;
+		int 	res = 0;
+		char	*s = (char *)str;
+
+		while (*s)
+			res = res * 10 + (*s++ - '0');
+		return (res);
+	}
+	long	to_long(const char *str)
+	{
+		long 	res = 0;
+		char	*s = (char *)str;
 
 		while (*s)
 			res = res * 10 + (*s++ - '0');

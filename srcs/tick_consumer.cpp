@@ -1,32 +1,33 @@
 #include "main.hpp"
 
+// copy of stream::ohlc::consumer as no different for now
 namespace	stream::tick::consumer
 {	
-	int			listen(t_env *env)
+	int		listen(t_env *env)
 	{
-		while (1)
-		{
-			if (env->lock[0]) //buffer has been filled with new tick data, start strategy::run
+		env->consumer_busy = false;
+		// printf("consumer: I'm free and waiting for first data points\n");
+		while (1){
+			if (env->new_data_available == true) // buffer has been filled with new tick data, start strategy::run
 			{
-				while (env->lock[0])	//while tick remains available to use
-					if (env->lock[2])	//if tick is processed and ready to be pulled by strategy::run
-					{
-						env->lock[2] = false; //data pulled, feeder is free to reload
-						while (!env->lock[1]); //wait for feeder to consume data
-						env->lock[1] = false; // data was consumed
-						strategy::run(env); // call logic
-					}
-				break; //exit, test is finished, no more ticks to proceed
+				env->stream_mutex.lock();
+				env->consumer_busy = true;
+				env->new_data_available = false; // consume data while other thread is locked
+				env->stream_mutex.unlock();
+				// check for stop signal
+				if (!EPOCH[0]) { // PRICE[0]
+					printf("stream::ohlc::consumer::terminate()\n");
+					return (1); // finished
+				}
+				// printf("consumer: I'm consuming data points >> I'm busy\n");
+				strategy::split_to_thread_pool(env); // call logic
+				env->stream_mutex.lock();
+				env->consumer_busy = false; // data consumed
+				env->stream_mutex.unlock();
+				// printf(env->new_data_available
+				// 	? "consumer: Thanks for waiting, I'll deal with it"
+				// 	: "consumer: I'm free and waiting for new data points\n");
 			}
 		}
-		return	(1);
-	}
-	int			flush(t_env *env)
-	{
-		env->ticks->epoch->resize(TICK_BUFF_SIZE);	//data->epoch->erase(TICK_BUFF_SIZE);
-		env->ticks->bid->resize(TICK_BUFF_SIZE);		//data->px->erase(TICK_BUFF_SIZE);
-		env->ticks->ask->resize(TICK_BUFF_SIZE);		//data->px->erase(TICK_BUFF_SIZE);
-		env->ticks->volume->resize(TICK_BUFF_SIZE);;		//data->vol->erase(TICK_BUFF_SIZE);
-		return (1);
 	}
 }

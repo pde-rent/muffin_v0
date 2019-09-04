@@ -6,28 +6,28 @@ namespace stream::tick::producer
 
 	int		generate(t_env *env)
 	{
-		size_t			epoch;
+		unsigned int	epoch;
 		double			volume;
 		double			price[2];
 		char			tmp[128];
 		char			buf[BUFF_SIZE + 1];
-		size_t			i = 0;
-		size_t			j = 0;
-		size_t			nb_ticks = file::count_lines(env->data_file_name);
-		//size_t			max_ticks = (TICK_BUFF_SIZE > nb_ticks ? nb_ticks : TICK_BUFF_SIZE);
-		uint16_t		chunk = 3; // given timestamp / bid / volume
+		unsigned int	i = 0;
+		unsigned int	j = 0;
+		unsigned int	nb_data = file::count_lines(env->data_file_path);
+		//unsigned int			max_ticks = (TICK_BUFF_SIZE > nb_data ? nb_data : TICK_BUFF_SIZE);
+		int		chunk = 3; // given timestamp / bid / volume
 		int				l = -1;
 		//fopen modes : r/rb/w/wb/a/ab/r+/w+/a+...
-		if (((histo = file::open_r(env->data_file_name))))
+		if (((histo = file::open_r(env->data_file_path))))
 		{
-			env->ticker->size = nb_ticks;
+			env->ticker.size = nb_data;
 			//if ((fread(buf, 1, line_ln, histo) == line_ln)) //jump first lines
 			//	fseek(histo, 0, SEEK_SET); //skip headers (byte size different from data lines)
 			while ((fread(buf, 1, BUFF_SIZE, histo))) //1 = sizeof(char)
 			{
 				buf[BUFF_SIZE] = '\0';
 				i = 0;
-				while (buf[i] && (j < nb_ticks)) // is ascii >> not null nor lost
+				while (buf[i] && (j < nb_data)) // is ascii >> not null nor lost
 				{
 					if (chunk == 3)
 					{
@@ -38,7 +38,7 @@ namespace stream::tick::producer
 						if (l >= 0 && buf[i] == ',')
 						{
 							tmp[++l] = '\0';
-							epoch = (size_t)str_parser::to_int(&tmp[0]);
+							epoch = (unsigned int)str_parser::to_int(&tmp[0]);
 							l = -1;
 							chunk = 1;
 							i++;

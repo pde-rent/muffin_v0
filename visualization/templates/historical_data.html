@@ -1,0 +1,23 @@
+ <!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>{{ title }}</title>
+<!-- 	<meta name="author" content="name">
+	<meta name="description" content="description here">
+	<meta name="keywords" content="keywords,here">
+ -->	<link rel="stylesheet" href="static/css/styles.css" type="text/css">
+		<script type="text/javascript" src="static/js/TinyKit.js"></script>
+		<script type="text/javascript" src="static/js/lightweight-charts.js"></script>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+		let ticker = {
+			series: {{ ticker["series"] }}, // [] array of time series // // use JSON.parse if str
+			name: "{{ ticker["name"] }}"
+		}
+	</script>
+	<script type="text/javascript" src="static/js/main.js"></script>
+</html>

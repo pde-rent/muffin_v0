@@ -159,15 +159,37 @@ namespace on_deque
 		return (100 - (100 / (1 + (prev_up[magic] / prev_down[magic]))));
 	}
 }
+
+// array function calls are 
 namespace on_array
 {
-	double SMA(std::deque<double> *price, int period, int shift = 0);
-	double EMA(std::deque<double> *price, int period, int shift = 0);
-	/*
-	double LWMA(t_tick_data *data, int period, int shift); //single mode
-	double HMA(t_tick_data *data, int period, int shift); //single mode
-	*/
-	//volatility
-	double ATR(t_tick_data *data, int period, int shift = 0, int ma_type = 1); //modes SMA, EMA ...
-	double SDEV(t_tick_data *data, int period, int shift = 0, int ma_type = 1); //modes SMA, EMA ...
+	//trend
+	// printf("ASK: %f MA: %f\n", ASK(0), MA1[pass]);
+	// printf("MA[%d]=%f PMA[%d]=%f PPMA[%d]=%f\n"
+		// , pass, MA1[pass], pass, PMA1[pass], pass, PPMA1[pass]);
+	template<class T>
+	T SMA(T price[], int period, int shift = 0, int magic = 0) //single mode
+	{
+		static T sum[MAX_PASS] = {0};
+		period += shift;
+		if (!sum[magic])	//compute the whole sum
+		{
+			sum[magic] = price[shift];
+			while (++shift < (period))
+				sum[magic] += price[shift];
+		}
+		else            //if the cache exists, no need to compute the whole sum
+		{
+			//printf("tick: %f period: %f\n", price->at(shift), price->at(period));
+			sum[magic] += (price[shift] - price[period]); //take of oldest price and add up last price
+		}
+		//printf("+ %f - %f\n", price->at(shift), price->at(period));
+		return (sum[magic] / (T)(period - shift));
+	}
+}
+
+// set the indicators namespace to on_array
+namespace indicators
+{
+	using namespace on_array;
 }

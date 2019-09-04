@@ -2,16 +2,14 @@
 
 namespace file
 {
-	static FILE *file;
-	
 	FILE			*open_w(std::string file_name, bool erase, bool binary)
 	{
 		std::string mode = erase ? (binary ? "wb" : "w") : (binary ? "ab" : "a");
-		return ((file = fopen(file_name.c_str(), mode.c_str())) ? file : NULL);
+		return (fopen(file_name.c_str(), mode.c_str()));
 	}
 	FILE			*open_r(std::string file_name, bool binary)
 	{
-		return ((file = fopen(file_name.c_str(), binary ? "rb" : "r")) ? file : NULL);
+		return (fopen(file_name.c_str(), binary ? "rb" : "r"));
 	}
 	bool			close(FILE *file)
 	{
@@ -23,6 +21,8 @@ namespace file
 	}
 	bool			exists(std::string file_name)
 	{
+		FILE *file;
+
 		if ((file = open_r(file_name)))
 		{
 			fclose(file);
@@ -32,6 +32,8 @@ namespace file
 	}
 	bool			write(std::string file_name, std::string str, bool erase)
 	{
+		FILE *file;
+	
 		if ((file = open_w(file_name, erase)))
 		{
 			fputs(str.c_str(), file);
@@ -42,33 +44,32 @@ namespace file
 	}
 	unsigned long	count_lines(std::string file_name)
 	{
-		FILE			*histo;
+		FILE			*f;
 		char			buf[BUFF_SIZE];
 		size_t			neol = 0;
 		int				handle;
-		unsigned long	len = 0;
+		// unsigned long	len = 0;
 		//fopen modes : r/rb/w/wb/a/ab/r+/w+/a+...
-		if ((histo = open_r(file_name, false)))
-		{
-			fseek(histo, 0, SEEK_END);
-			len = (ftell(histo));
-			fseek(histo, 0, SEEK_SET);
-			while ((handle = fread(buf, 1, BUFF_SIZE, histo)))
-			{
-				char *ptr = &buf[0];
-				// while *ptr sets to the next end of line, keep on searching
-				while ((ptr = (char *)memchr(ptr, '\n', (buf + handle) - ptr)))
-				{
-					++ptr;
-					++neol;
-				}
-			}
-			printf("Characters to parse: %lu\nRows of data: %zu\nEstimate loading time: %zu ms\n",
-				len, neol, neol / 290);
-			fclose(histo);
-			return (neol);
+		if (!(f = open_r(file_name))) {
+			return (put_error(ERR_NO_HISTO_FILE, 0));
+		} else {
+			// printf("Stream%s\n", file_name.c_str());
 		}
-		printf("Failed to open the data file\n");
-		return (0);
+		// fseek(f, 0, SEEK_END);	// move file pointer to EOF
+		// len = (ftell(file));	// read EOF location
+		// printf("Characters to parse: %lu\n", ftell(f));
+		fseek(f, 0, SEEK_SET);	// move file pointer back to start
+		while ((handle = fread(buf, 1, BUFF_SIZE, f)))
+		{
+			char *ptr = &buf[0];
+			// while *ptr sets to the next end of line, keep on searching
+			while ((ptr = (char *)memchr(ptr, '\n', (&buf[0] + handle) - ptr)))
+			{
+				++ptr;
+				++neol;
+			}
+		}
+		fclose(f);
+		return (neol);
 	}
 }
